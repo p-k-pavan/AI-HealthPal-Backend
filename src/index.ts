@@ -1,19 +1,23 @@
 import express from "express";
 import dotenv from "dotenv"
 import mongoose from "mongoose";
+import cooikeParser from "cookie-parser";
 
 const app = express();
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB as string)
 .then((): void => {
-    console.log("Connected to Mongo");
+    console.log("Connected to MongoDB successfully");
 })
 .catch((error: unknown): void => {
     console.error("Error connecting to MongoDB:", error);
 })
 
 const PORT = process.env.PORT || 5000
+
+app.use(express.json());
+app.use(cooikeParser());
 
 app.listen(PORT, ()=>{
     console.log("Server is running on Port 5000")
