@@ -1,11 +1,20 @@
 {
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.10",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   },
+  "name": "healthpal-backend",
+  "version": "1.0.0",
+  "description": "Backend for HealthPal application",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "author": "Pavan Kumar R",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.0.1",
     "express": "^5.1.0",
     "mongoose": "^8.16.1"
