@@ -33,28 +33,36 @@ const registerController = async (req: Request, res: Response, next: NextFunctio
 
         res.cookie("healthPal", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            // secure: process.env.NODE_ENV === "production",
+            // sameSite: "strict",
+            maxAge: 86400000 
         });
 
-        return res.status(201).json({ message: "User registered successfully", userId: newUser._id });
+        return res.status(201).json({
+            message: "User registered successfully",
+            userId: newUser._id,
+            name: newUser.name,
+            role: newUser.role,
+            profilePicture: newUser.profilePicture,
+            token: token
+        });
     } catch (error) {
         console.error("Registration error:", error);
         next({
-            status: 500,    
+            status: 500,
             message: error instanceof Error ? error.message : "Internal Server Error",
         });
     }
 };
 
 const loginController = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
     try {
         if (!email || !password) {
             return res.status(400).json({ message: "Email and password are required" });
         }
 
-        const user = await User.findOne({email});
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: "Incorrect Credential" });
         }
@@ -65,11 +73,12 @@ const loginController = async (req: Request, res: Response, next: NextFunction):
         }
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET as string, { expiresIn: "1d" });
-        
+
         res.cookie("healthPal", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            // secure: process.env.NODE_ENV === "production",
+            // sameSite: "strict",
+            maxAge: 86400000  
         })
 
         return res.status(200).json({
@@ -78,8 +87,9 @@ const loginController = async (req: Request, res: Response, next: NextFunction):
             name: user.name,
             role: user.role,
             profilePicture: user.profilePicture,
+            token: token
         });
-        
+
     } catch (error) {
         console.error("Login error:", error);
         next({

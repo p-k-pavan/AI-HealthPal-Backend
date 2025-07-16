@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.router"; 
 import { errorHandler } from "./middleware/errorHandler";
 import aiRouter from "./routes/ai.router";
+import cors from "cors"
 
 const app = express();
 dotenv.config();
@@ -12,6 +13,11 @@ dotenv.config();
 mongoose.connect(process.env.MONGODB as string)
     .then(() => console.log("Connected to MongoDB successfully"))
     .catch((err) => console.error("MongoDB connection error:", err));
+
+app.use(cors({
+    origin:"http://localhost:3000",
+    credentials:true
+}))
 
 app.use(express.json());
 app.use(cookieParser());
