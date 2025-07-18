@@ -5,9 +5,10 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.router"; 
 import { errorHandler } from "./middleware/errorHandler";
 import aiRouter from "./routes/ai.router";
-import cors from "cors"
-import prescriptionRouter from "./routes/prescription.router"
+import cors from "cors";
+import prescriptionRouter from "./routes/prescription.router";
 import appointmentRouter from "./routes/appointment.router";
+import doctorRouter from "./routes/doctor.router";
 
 const app = express();
 dotenv.config();
@@ -28,6 +29,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/ai",aiRouter);
 app.use("/api/prescription", prescriptionRouter);
 app.use("/api/appointment", appointmentRouter);
+app.use("/api/doctor", doctorRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
