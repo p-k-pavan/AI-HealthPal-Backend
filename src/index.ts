@@ -7,6 +7,7 @@ import { errorHandler } from "./middleware/errorHandler";
 import aiRouter from "./routes/ai.router";
 import cors from "cors"
 import prescriptionRouter from "./routes/prescription.router"
+import appointmentRouter from "./routes/appointment.router";
 
 const app = express();
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/ai",aiRouter);
 app.use("/api/prescription", prescriptionRouter);
+app.use("/api/appointment", appointmentRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
