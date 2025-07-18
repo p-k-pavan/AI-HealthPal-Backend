@@ -99,4 +99,21 @@ const loginController = async (req: Request, res: Response, next: NextFunction):
     }
 }
 
-export { registerController, loginController };
+const logoutController = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+    try {
+        res.clearCookie("healthPal", {
+            httpOnly: true,
+            // secure: process.env.NODE_ENV === "production",
+            // sameSite: "strict",
+        });
+        return res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+        console.error("Logout error:", error);
+        next({
+            status: 500,
+            message: error instanceof Error ? error.message : "Internal Server Error",
+        });
+    }
+}
+
+export { registerController, loginController, logoutController };
